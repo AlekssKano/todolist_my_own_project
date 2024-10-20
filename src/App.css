@@ -6,3 +6,21 @@
 .App > div {
   margin-right: 50px;
 }
+.error{
+  border: 1px solid red;
+}
+.error_message{
+  color:red;
+}
+.button_filter{
+  color: #537569;
+
+}
+.active_button_filter{
+  background-color: #22eda6;
+  border: 1px solid #1b1818;
+
+}
+.is_Done{
+  opacity: 0.5;
+}
