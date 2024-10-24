@@ -12,10 +12,12 @@ type TodolistTypeProps = {
     tasks: Array<tasksType>
     date?: string
     filter: filterValuesType
-    removeTask: (taskId: string) => void
-    changeFilter: (filter: filterValuesType) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (taskId: string, taskStatus:boolean) => void
+    removeTask: (taskId: string, todolistId:string) => void
+    changeFilter: (filter: filterValuesType, todolistId:string) => void
+    addTask: (title: string, todolistId:string) => void
+    changeTaskStatus: (taskId: string, taskStatus:boolean, todolistId:string) => void
+    removeTodolist:( todolistId:string) => void
+    todolistId:string;
 }
 export const Todolist = (props: TodolistTypeProps) => {
     // const inputRef = useRef<HTMLInputElement>(null)
@@ -26,7 +28,7 @@ export const Todolist = (props: TodolistTypeProps) => {
     const onAddTaskHandler = () => {
         if(inputTasksValue.trim() !=="")
         {
-            props.addTask(inputTasksValue.trim())
+            props.addTask(inputTasksValue.trim(),props.todolistId)
         setInputTasksValue("")
         }
         else setError("Title is Required")
@@ -47,12 +49,15 @@ export const Todolist = (props: TodolistTypeProps) => {
 
     //buttons_filters
     const changeFilterTaskHandler= (filter: filterValuesType) =>{
-        props.changeFilter(filter)
+        props.changeFilter(filter, props.todolistId)
+    }
+    const removeTodolistHandler=()=>{
+        props.removeTodolist(props.todolistId)
     }
     return (
 
         <div>
-            <h3>{props.title}</h3>
+            <h3>{props.title}<Button title={'X'} onClick={removeTodolistHandler}/></h3>
             <div>
                 {/*<input ref={inputRef}/>*/}
                 <input className={error?'error':''}  value={inputTasksValue} onChange={(event) => {
@@ -75,10 +80,10 @@ export const Todolist = (props: TodolistTypeProps) => {
                 {error&&<div className="error_message">{error}</div>}
             </div>
             {props.tasks.length > 0 ? props.tasks.map((task: tasksType) => (
-                <li className={task.isDone?"is_Done":""} key={task.id}><input type="checkbox" checked={task.isDone} onChange={()=>props.changeTaskStatus(task.id, !task.isDone)}/>
+                <li className={task.isDone?"is_Done":""} key={task.id}><input type="checkbox" checked={task.isDone} onChange={()=>props.changeTaskStatus(task.id, !task.isDone, props.todolistId)}/>
 
                     <span>{task.title}</span>
-                    <Button title={'x'} onClick={() => props.removeTask(task.id,)}/>
+                    <Button title={'x'} onClick={() => props.removeTask(task.id, props.todolistId)}/>
                 </li>
             )) : <span>No Tasks</span>}
 
