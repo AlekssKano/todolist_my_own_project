@@ -1,6 +1,9 @@
 import React, {ChangeEvent, useState} from 'react';
 import {Button} from "./Button";
-
+import MuiButton from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import AddBoxIcon from '@mui/icons-material/AddBox'
+import IconButton from '@mui/material/IconButton'
 type AddItemFormType = {
     addItem: (title: string) => void
 }
@@ -27,20 +30,30 @@ export const AddItemForm = (props: AddItemFormType) => {
 
     return (
         <div>
-            <input className={error ? 'error' : ''}
-                   value={inputItemValue}
-                   onChange={(event) => {
-                       changeTaskTitleHandler(event)}
-            }
-                   onKeyUp={(event) => {
-                       addTaskOnEnterHandler(event)
-                   }}/>
+            {/*<input className={error ? 'error' : ''}*/}
+            {/*       value={inputItemValue}*/}
+            {/*       onChange={(event) => {*/}
+            {/*           changeTaskTitleHandler(event)}*/}
+            {/*}*/}
+            {/*       onKeyUp={(event) => {*/}
+            {/*           addTaskOnEnterHandler(event)*/}
+            {/*       }}/>*/}
+            <TextField
+                label="Enter a title"
+                value={inputItemValue}
+                       variant={'outlined'}
+                       size={'small'}
+                       error={!!error}
+                       helperText={error}
+                       onChange={changeTaskTitleHandler}
+                       onKeyUp={addTaskOnEnterHandler}
+            />
 
-            <Button title={'+'} onClick={() => {
-                onAddItemHandler()
-            }
-            }/>
-            {error && <div className="error_message">{error}</div>}
+
+            <IconButton color={'primary'} onClick={onAddItemHandler}>
+                <AddBoxIcon/>
+            </IconButton>
+            {/*{error && <div className="error_message">{error}</div>}*/}
         </div>
     );
 };
