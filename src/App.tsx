@@ -21,7 +21,7 @@ export type filterValuesType = 'All' | 'Active' | 'Completed'
 
 type ThemeMode = 'dark' | 'light'
 
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: filterValuesType
