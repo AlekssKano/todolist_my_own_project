@@ -2,8 +2,12 @@ import {v1} from "uuid";
 import {TodolistType} from "../App";
 import {
     addTodolistAC,
-    AddTodolistActionType, ChangeTodolistFilterAC, ChangeTodolistFilterActionType, ChangeTodolistTitleAC,
-    ChangeTodolistTitleActionType, removeTodolistAC,
+    AddTodolistActionType,
+    ChangeTodolistFilterAC,
+    ChangeTodolistFilterActionType,
+    ChangeTodolistTitleAC,
+    ChangeTodolistTitleActionType,
+    removeTodolistAC,
     RemoveTodolistActionType,
     todolist_reducer
 } from "./todolist_reducer";

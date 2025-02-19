@@ -74,9 +74,9 @@ export const addTodolistAC = (title: string, id:string): AddTodolistActionType =
     return { type: 'ADD-TODOLIST', payload: { id, title } } as const
 }
 export const ChangeTodolistTitleAC=(id:string, title:string):ChangeTodolistTitleActionType=>{
-    return {type: 'CHANGE-TODOLIST-TITLE', payload: {id, title}}
+    return {type: 'CHANGE-TODOLIST-TITLE', payload: {id, title}} as const
 }
 export const ChangeTodolistFilterAC=(id:string,filter:filterValuesType):ChangeTodolistFilterActionType=>{
-    return {type: 'CHANGE-TODOLIST-FILTER', payload: {id, filter}
+    return {type: 'CHANGE-TODOLIST-FILTER', payload: {id, filter} as const
     }
 }
