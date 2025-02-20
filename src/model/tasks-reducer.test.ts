@@ -1,12 +1,11 @@
-import type {TaskTypeState} from '../App'
+import type {TaskTypeState} from '../app/App'
 import {
     changeTaskStatusAC, changeTaskTitleAC,
     createTaskAC,
-    createTodolistAC,
     deleteTaskAC,
-    deleteTodolistAC,
     tasksReducer
 } from "./tasks-reducer";
+import {addTodolistAC, deleteTodolistAC} from "./todolist_reducer";
 
 let startState: TaskTypeState = {}
 
@@ -25,7 +24,7 @@ beforeEach(() => {
     }
 })
 test('array should be created for new todolist', () => {
-    const endState = tasksReducer(startState, createTodolistAC('New todolist'))
+    const endState = tasksReducer(startState, addTodolistAC('New todolist', "1"))
 
     const keys = Object.keys(endState)
     const newKey = keys.find(k => k !== 'todolistId1' && k !== 'todolistId2')

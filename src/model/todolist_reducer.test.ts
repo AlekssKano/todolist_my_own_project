@@ -1,14 +1,10 @@
 import {v1} from "uuid";
-import {TodolistType} from "../App";
+import {TodolistType} from "../app/App";
 import {
     addTodolistAC,
-    AddTodolistActionType,
     ChangeTodolistFilterAC,
-    ChangeTodolistFilterActionType,
     ChangeTodolistTitleAC,
-    ChangeTodolistTitleActionType,
-    removeTodolistAC,
-    RemoveTodolistActionType,
+    deleteTodolistAC,
     todolist_reducer
 } from "./todolist_reducer";
 
@@ -28,7 +24,7 @@ test ('delete todolist', ()=>{
     //         id:todolist1,
     //     } // instead action we will USE removeTodolistAC!!!
     // }
-  const endState =todolist_reducer(startState, removeTodolistAC(todolist1))
+  const endState =todolist_reducer(startState, deleteTodolistAC(todolist1))
 
     expect(endState.length).toBe(1)
     expect(endState[0].id).toBe(todolist2)

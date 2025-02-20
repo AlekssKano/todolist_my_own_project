@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useRef, useState} from 'react';
 import {Button} from "../components/Button";
-import {filterValuesType} from "../App";
+import {filterValuesType} from "../app/App";
 import {AddItemForm} from "../components/AddItemForm";
 import {EditAbleSpan} from "../components/EditAbleSpan";
 import IconButton from '@mui/material/IconButton'

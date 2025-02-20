@@ -1,8 +1,8 @@
 import React, {useReducer, useState} from 'react';
 import './App.css';
-import {tasksType, Todolist} from "./todolist/Todolist";
+import {tasksType, Todolist} from "../todolist/Todolist";
 import {v1} from 'uuid'
-import {AddItemForm} from "./components/AddItemForm";
+import {AddItemForm} from "../components/AddItemForm";
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
@@ -10,25 +10,21 @@ import MenuIcon from '@mui/icons-material/Menu'
 import {Container} from "@mui/material";
 import {Grid2} from '@mui/material';
 import Paper from '@mui/material/Paper'
-import {MenuButton} from "./styles/MenuButton";
+import {MenuButton} from "../styles/MenuButton";
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import CssBaseline from '@mui/material/CssBaseline'
 import {
     addTodolistAC,
-    ChangeTodolistFilterAC, ChangeTodolistTitleAC,
-    ChangeTodolistTitleActionType,
-    removeTodolistAC,
-    todolist_reducer
-} from "./model/todolist_reducer";
+    ChangeTodolistFilterAC, ChangeTodolistTitleAC, deleteTodolistAC,
+} from "../model/todolist_reducer";
 import {
     changeTaskStatusAC, changeTaskTitleAC,
     createTaskAC,
-    createTodolistAC,
     deleteTaskAC,
-    deleteTodolistAC,
-    tasksReducer
-} from "./model/tasks-reducer";
+} from "../model/tasks-reducer";
+import {RootState} from "./store";
+import {useDispatch, useSelector} from "react-redux";
 export type filterValuesType = 'All' | 'Active' | 'Completed'
 
 
@@ -47,12 +43,13 @@ export type TaskTypeState = {
 }
 
 function App() {
-
-
-    let [todolist, dispatchToTodolists] = useReducer(todolist_reducer,[]);
-
-    let [todolistTasks, dispatchToTasks] = useReducer(tasksReducer, {})
-//theme
+    const todolist = useSelector<RootState, TodolistType[]>(state => state.todolists)
+    const todolistTasks = useSelector<RootState, TaskTypeState>(state => state.tasks)
+    const dispatch = useDispatch()
+//     let [todolist, dispatchToTodolists] = useReducer(todolist_reducer,[]);
+//
+//     let [todolistTasks, dispatchToTasks] = useReducer(tasksReducer, {})
+// //theme
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
     const theme=createTheme({
@@ -72,36 +69,38 @@ function App() {
 
     const changeFilter = (filter: filterValuesType, todoListId: string) => {
 
-        dispatchToTodolists(ChangeTodolistFilterAC(todoListId,filter))
+        dispatch(ChangeTodolistFilterAC(todoListId,filter))
     }
     const removeTask = (taskId: string, todolistId: string) => {
-     dispatchToTasks(deleteTaskAC({taskId, todolistId}))
+        dispatch(deleteTaskAC({taskId, todolistId}))
     }
     const changeTaskStatus = (taskId: string, taskStatus: boolean, todolistId: string) => {
-       dispatchToTasks(changeTaskStatusAC({taskId,taskStatus,todolistId}))
+        dispatch(changeTaskStatusAC({taskId,taskStatus,todolistId}))
     }
     const addTask = (title: string, todolistId: string) => {
-        dispatchToTasks(createTaskAC({title,todolistId}))
+        dispatch(createTaskAC({title,todolistId}))
 
     }
     const removeTodolist = (todolistId: string) => {
-        dispatchToTodolists(removeTodolistAC(todolistId))
-        dispatchToTasks(deleteTodolistAC(todolistId))
+        const action = deleteTodolistAC(todolistId)
+        dispatch(action)
+
     }
 
     const addTodolist = (todolistTitle: string) => {
         let todolistId=v1()
-    dispatchToTodolists(addTodolistAC(todolistTitle, todolistId))
-        dispatchToTasks(createTodolistAC(todolistId))
+        const action = addTodolistAC(todolistTitle,todolistId)
+        dispatch(action)
+
 
     }
     const changeTodolistName = (title: string, todolistId: string) => {
-      dispatchToTodolists(ChangeTodolistTitleAC(todolistId,title))
+        dispatch(ChangeTodolistTitleAC(todolistId,title))
     }
 
 
     const changeTaskName = (title: string, todolistId: string, taskId: string) => {
-        dispatchToTasks(changeTaskTitleAC({title, todolistId, taskId}))
+        dispatch(changeTaskTitleAC({title, todolistId, taskId}))
     }
 
 

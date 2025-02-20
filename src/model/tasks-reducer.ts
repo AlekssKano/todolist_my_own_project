@@ -1,21 +1,10 @@
-import {TaskTypeState} from "../App";
+import {TaskTypeState} from "../app/App";
 import {v1} from "uuid";
+import { AddTodolistActionType, RemoveTodolistActionType} from "./todolist_reducer";
 
 const initialState: TaskTypeState = {};
 
-export type CreateTodolistActionType = {
-    type: "CREATE_TODOLIST_CREATE",
-    payload:{
-        todolistId: string,
 
-    }
-}
-export type DeleteTodolistActionType = {
-    type: "DELETE_TODOLIST_DELETE",
-    payload:{
-        todolistId: string,
-    }
-}
 export type DeleteTaskActionType = {
     type :'DELETE_TASK_DELETE',
     payload:{
@@ -47,16 +36,16 @@ export type ChangeTaskTitleActionType = {
 
     }
 }
- type ActionType = CreateTodolistActionType | DeleteTodolistActionType |DeleteTaskActionType |CreateTaskActionType|ChangeTaskStatusActionType |ChangeTaskTitleActionType
+ type ActionType = AddTodolistActionType | RemoveTodolistActionType |DeleteTaskActionType |CreateTaskActionType|ChangeTaskStatusActionType |ChangeTaskTitleActionType
 export const tasksReducer = (state: TaskTypeState = initialState, action: ActionType): TaskTypeState => {
     switch (action.type) {
-        case 'CREATE_TODOLIST_CREATE': {
+        case 'ADD-TODOLIST': {
 
-            return {...state, [action.payload.todolistId]: []}
+            return {...state, [action.payload.id]: []}
         }
-        case 'DELETE_TODOLIST_DELETE': {
+        case 'REMOVE_TODOLIST': {
             const newState = {...state}
-            delete newState[action.payload.todolistId]
+            delete newState[action.payload.id]
             return newState
         }
         case 'DELETE_TASK_DELETE': {
@@ -93,17 +82,6 @@ export const tasksReducer = (state: TaskTypeState = initialState, action: Action
 }
 
 
-export const createTodolistAC=(todolistId:string):CreateTodolistActionType=> {
-    return {
-        type: 'CREATE_TODOLIST_CREATE', payload: {todolistId} as const
-
-    }
-}
-export const deleteTodolistAC=(todolistId:string):DeleteTodolistActionType=>{
-    return{
-        type: 'DELETE_TODOLIST_DELETE', payload: {todolistId} as const
-    }
-}
 export const deleteTaskAC=(payload:{todolistId: string, taskId: string}):DeleteTaskActionType=>{
     return {
         type: 'DELETE_TASK_DELETE', payload} as const
