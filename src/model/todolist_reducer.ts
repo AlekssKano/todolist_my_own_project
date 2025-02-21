@@ -4,10 +4,10 @@ import {createAction} from "@reduxjs/toolkit";
 
 
 
-export const deleteTodolistAC = (todolistId: string): RemoveTodolistActionType => {
-    return { type: 'REMOVE_TODOLIST', payload: { id: todolistId } } as const
-}
-// export const removeTodolistAC =createAction<{id:string}>('todolist/REMOVE_TODOLIST')
+// export const deleteTodolistAC = (todolistId: string): RemoveTodolistActionType => {
+//     return { type: 'REMOVE_TODOLIST', payload: { id: todolistId } } as const
+// }
+export const removeTodolistAC =createAction<{id:string}>('todolist/REMOVE_TODOLIST')
 
 let InitialState:TodolistType[]= []
 
